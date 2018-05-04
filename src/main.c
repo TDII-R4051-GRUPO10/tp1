@@ -94,6 +94,8 @@ int main(void)
 {
 	initHardware();
 
+	//int i=0;
+
 	while (1)
 	{
 		Board_LED_Toggle(LED);
