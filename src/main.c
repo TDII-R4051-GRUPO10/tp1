@@ -39,7 +39,7 @@
 
 /*==================[inclusions]=============================================*/
 
-#include "../../tp1/inc/main.h"
+#include "../../TP1/inc/main.h"
 
 #include "board.h"
 
@@ -63,7 +63,8 @@ static void pausems(uint32_t t);
 
 /** @brief used for delay counter */
 static uint32_t pausems_count;
-
+static uint32_t time_count = 5000;
+static uint32_t aux;
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
@@ -77,29 +78,47 @@ static void initHardware(void)
 
 static void pausems(uint32_t t)
 {
+
 	pausems_count = t;
 	while (pausems_count != 0) {
 		__WFI();
 	}
+
 }
 
 /*==================[external functions definition]==========================*/
 
 void SysTick_Handler(void)
 {
-	if(pausems_count > 0) pausems_count--;
+
+	if(time_count > 0)
+	{
+		time_count--;
+
+	}
+
+	else
+	{
+		time_count = 5000;
+		if(aux != 0) aux= aux - 100;
+		else{
+			aux = DELAY_MS;
+
+			pausems_count = aux;
+		}
+
+	}
+	pausems_count--;
 }
 
 int main(void)
 {
 	initHardware();
-
-	//int i=0;
-
+	aux = DELAY_MS;
 	while (1)
 	{
 		Board_LED_Toggle(LED);
-		pausems(DELAY_MS);
+		pausems(aux);
 	}
 }
 
