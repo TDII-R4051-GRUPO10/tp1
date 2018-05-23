@@ -55,7 +55,7 @@
 static void initHardware(void);
 
 /** @brief delay function
- * @param t desired milliseconds to wait
+ * @param t desired milliseconds to wait okey
  */
 static void pausems(uint32_t t);
 
